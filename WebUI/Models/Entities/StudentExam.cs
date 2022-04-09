@@ -5,10 +5,10 @@ namespace WebUI.Models.Entities
 {
     public class StudentExam
     {
-        [Key]
-        public int studentID { get; set; }
 
         [Key]
+        public int id { get; set; }
+        public int studentID { get; set; }
         public int examID { get; set; }
         public double grade { get; set; }
     }

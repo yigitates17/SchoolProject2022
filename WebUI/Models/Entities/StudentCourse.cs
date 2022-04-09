@@ -5,13 +5,11 @@ namespace WebUI.Models.Entities
 {
     public class StudentCourse
     {
+
         [Key]
+        public int id { get; set; }
         public int studentID { get; set; }
-
-        [Key]
         public int courseID { get; set; }
-
-        [Key]
         public int semesterID { get; set; }
     }
 }
