@@ -1,15 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebUI.Models.Entities;
 using WebUI.Models.DataAccess;
+using WebUI.Models.DataAccess.EFRepository.DalLayer.Concrete;
+using WebUI.Models.DataAccess.EFRepository.DalLayer;
+using WebUI.Models.DataAccess.EFRepository.DalLayer.OracleDb;
 
 namespace WebUI.Controllers
 {
     public class DepartmentsController : Controller
     {
-        SchoolProjectDbContext dbContext = new SchoolProjectDbContext();
+        private readonly IDepartmentOracleDal _departmentDal;
+
+        public DepartmentsController(IDepartmentOracleDal departmentDal)
+        {
+            _departmentDal = departmentDal;
+        }
+
         public IActionResult Index()
         {
-            var list = dbContext.Departments.ToList();
+            var list = _departmentDal.GetList();
             return View(list);
         }
 
@@ -22,8 +31,8 @@ namespace WebUI.Controllers
         [HttpPost]
         public IActionResult Create(Department department)
         {
-            dbContext.Departments.Add(department);
-            dbContext.SaveChanges();
+            _departmentDal.Add(department);
+
 
             if (ModelState.IsValid)
             {
@@ -35,7 +44,7 @@ namespace WebUI.Controllers
         [HttpGet]
         public IActionResult Update(int id)
         {
-            var department = dbContext.Departments.Find(id);
+            var department = _departmentDal.Get(id);
             return View(department);
         }
 
@@ -45,8 +54,7 @@ namespace WebUI.Controllers
 
             if (ModelState.IsValid)
             {
-                dbContext.Departments.Update(department);
-                dbContext.SaveChanges();
+                _departmentDal.Update(department);
 
                 return RedirectToAction("Index");
             }
@@ -56,7 +64,7 @@ namespace WebUI.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            var department = dbContext.Departments.Find(id);
+            var department = _departmentDal.Get(id);
             return View(department);
         }
 
@@ -65,8 +73,7 @@ namespace WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                dbContext.Departments.Remove(department);
-                dbContext.SaveChanges();
+                _departmentDal.Delete(department);
 
                 return RedirectToAction("Index");
             }

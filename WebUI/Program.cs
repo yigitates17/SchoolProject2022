@@ -1,7 +1,12 @@
+using WebUI.Models.DataAccess.EFRepository.DalLayer;
+using WebUI.Models.DataAccess.EFRepository.DalLayer.Concrete;
+using WebUI.Models.DataAccess.EFRepository.DalLayer.OracleDb;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<IDepartmentOracleDal, DepartmentOracleDal>();
 
 var app = builder.Build();
 

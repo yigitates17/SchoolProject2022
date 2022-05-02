@@ -3,7 +3,7 @@ using WebUI.Models.Entities;
 
 namespace WebUI.Models.DataAccess.EFRepository.DalLayer
 {
-    public class DepartmentDal : IDbService<Department>
+    public interface IDepartmentOracleDal : IDbService<Department>
     {
         public Department Add(Department entity)
         {
@@ -29,5 +29,7 @@ namespace WebUI.Models.DataAccess.EFRepository.DalLayer
         {
             throw new NotImplementedException();
         }
+
+        void Delete(Department department);
     }
 }
